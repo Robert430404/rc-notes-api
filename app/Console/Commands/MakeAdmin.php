@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
 
@@ -55,10 +56,11 @@ class MakeAdmin extends Command
         ])->validate();
 
         User::create([
-            'name'     => $name,
-            'password' => password_hash($pass, PASSWORD_DEFAULT),
-            'email'    => $email,
-            'api_key'  => password_hash($name . $pass, PASSWORD_DEFAULT )
+            'name'       => $name,
+            'password'   => password_hash($pass, PASSWORD_DEFAULT),
+            'email'      => $email,
+            'api_key'    => password_hash($name . $pass, PASSWORD_DEFAULT ),
+            'created_at' => Carbon::now(),
         ]);
 
         $this->info('User Created Successfully');
