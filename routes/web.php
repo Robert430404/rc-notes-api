@@ -14,3 +14,11 @@
 $app->get('/', function () use ($app) {
     return $app->version();
 });
+
+$app->group(['prefix' => 'api/v1'], function () use ($app) {
+    $app->get(   'notes', 'NoteController@get');
+    $app->put(   'notes', 'NoteController@put');
+    $app->post(  'notes', 'NoteController@post');
+    $app->patch( 'notes', 'NoteController@patch');
+    $app->delete('notes', 'NoteController@delete');
+});
