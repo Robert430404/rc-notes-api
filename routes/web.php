@@ -21,4 +21,10 @@ $app->group(['prefix' => 'api/v1'], function () use ($app) {
     $app->post(  'notes', 'NoteController@post');
     $app->patch( 'notes', 'NoteController@patch');
     $app->delete('notes', 'NoteController@delete');
+
+    $app->get(   'types', 'TypeController@get');
+    $app->put(   'types', 'TypeController@put');
+    $app->post(  'types', 'TypeController@post');
+    $app->patch( 'types', 'TypeController@patch');
+    $app->delete('types', 'TypeController@delete');
 });
