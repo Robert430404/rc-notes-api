@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Note;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -48,11 +49,12 @@ class NoteController extends Controller
      */
     public function put(Request $request): JsonResponse
     {
-        $note          = new Note();
-        $note->name    = $request->get('name');
-        $note->content = $request->get('content');
-        $note->type    = $request->get('type');
-        $save          = $note->save();
+        $note             = new Note();
+        $note->name       = $request->get('name');
+        $note->content    = $request->get('content');
+        $note->type       = $request->get('type');
+        $note->created_at = Carbon::now();
+        $save             = $note->save();
 
         return response()->json([
             'success' => $save ? true : false
@@ -82,11 +84,12 @@ class NoteController extends Controller
      */
     public function patch(Request $request): JsonResponse
     {
-        $note          = $this->note->find($request->get('id'));
-        $note->name    = $request->get('name');
-        $note->content = $request->get('content');
-        $note->type    = $request->get('type');
-        $save          = $note->save();
+        $note             = $this->note->find($request->get('id'));
+        $note->name       = $request->get('name');
+        $note->content    = $request->get('content');
+        $note->type       = $request->get('type');
+        $note->updated_at = Carbon::now();
+        $save             = $note->save();
 
         return response()->json([
             'success' => $save ? true : false,
@@ -102,6 +105,11 @@ class NoteController extends Controller
      */
     public function delete(Request $request): JsonResponse
     {
+        $note   = $this->note->find($request->get('id'));
+        $delete = $note->delete();
 
+        return response()->json([
+            'success' => $delete ? true : false
+        ]);
     }
 }
