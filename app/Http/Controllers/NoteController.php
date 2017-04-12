@@ -98,7 +98,7 @@ class NoteController extends Controller
     }
 
     /**
-     * Deletes a note based upon the send id
+     * Deletes a note based upon the sent id
      *
      * @param Request $request
      * @return JsonResponse
