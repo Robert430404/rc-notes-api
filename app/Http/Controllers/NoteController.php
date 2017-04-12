@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Note;
+use App\Services\Importers\ImportNotesFromCSV;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -19,15 +20,18 @@ class NoteController extends Controller
      */
     private $note;
 
+    private $importer;
+
     /**
      * NoteController constructor.
      *
      * @param Note $note
      */
-    public function __construct(Note $note)
+    public function __construct(Note $note, ImportNotesFromCSV $importNotesFromCSV)
     {
         $this->middleware('auth');
-        $this->note = $note;
+        $this->note     = $note;
+        $this->importer = $importNotesFromCSV;
     }
 
     /**
@@ -70,10 +74,13 @@ class NoteController extends Controller
      */
     public function post(Request $request): JsonResponse
     {
-        // TODO: Implement bulk import of notes from external mediums
+        $resource = $this->importer->source($request->file('import'));
+        $count    = $resource->recordCount();
+        $import   = $resource->import();
 
         return response()->json([
-            'status' => 'not implemented'
+            'success' => $import,
+            'count'   => $count,
         ]);
     }
 

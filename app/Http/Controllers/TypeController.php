@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Importers\ImportTypesFromCSV;
 use App\Type;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -20,14 +21,20 @@ class TypeController extends Controller
     private $type;
 
     /**
+     * @var ImportTypesFromCSV
+     */
+    private $importer;
+
+    /**
      * TypeController constructor.
      *
      * @param Type $type
      */
-    public function __construct(Type $type)
+    public function __construct(Type $type, ImportTypesFromCSV $importTypesFromCSV)
     {
         $this->middleware('auth');
-        $this->type = $type;
+        $this->type     = $type;
+        $this->importer = $importTypesFromCSV;
     }
 
     /**
@@ -68,10 +75,13 @@ class TypeController extends Controller
      */
     public function post(Request $request): JsonResponse
     {
-        // TODO: Implement bulk import of notes from external mediums
+        $resource = $this->importer->source($request->file('import.csv'));
+        $count    = $resource->recordCount();
+        $import   = $resource->import();
 
         return response()->json([
-            'status' => 'not implemented'
+            'success' => $import,
+            'count'   => $count,
         ]);
     }
 

@@ -3,16 +3,16 @@
 namespace App\Services\Importers;
 
 use Generator;
-use App\Contracts\CSVImporter;
+use App\Contracts\Importer;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Class ImportFromCSV
+ * Class BaseImporter
  *
  * @package App\Services\Importers
  */
-class Importer implements CSVImporter
+abstract class BaseImporter implements Importer
 {
     /**
      * @var UploadedFile
@@ -25,25 +25,26 @@ class Importer implements CSVImporter
     protected $stream;
 
     /**
-     * ImportFromCSV constructor.
-     *
-     * @param UploadedFile $file
-     */
-    public function __construct(UploadedFile $file)
-    {
-        $this->file   = $file;
-        $this->stream = fopen($this->file->getRealPath(), 'r');
-    }
-
-    /**
      * Imports the uploaded file
      *
      * @param UploadedFile $file
      * @return bool
      */
-    public function import(): bool
+    abstract public function import(): bool;
+
+    /**
+     * Sets the source file for the importer, and opens the stream
+     * for use by the class.
+     *
+     * @param UploadedFile $file
+     * @return BaseImporter
+     */
+    public function source(UploadedFile $file): Importer
     {
-        // TODO: create generic implementation of an importer for
+        $this->file   = $file;
+        $this->stream = fopen($this->file->getRealPath(), 'r');
+
+        return $this;
     }
 
     /**
@@ -51,7 +52,7 @@ class Importer implements CSVImporter
      *
      * @return Generator
      */
-    public function yieldRow(): Generator
+    protected function yieldRow(): Generator
     {
         while (!feof($this->stream)) {
             yield fgetcsv($this->stream);

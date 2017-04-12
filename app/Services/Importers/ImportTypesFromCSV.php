@@ -2,15 +2,15 @@
 
 namespace App\Services\Importers;
 
-use App\Note;
+use App\Type;
 use App\Contracts\CSVImporter;
 
 /**
- * Class ImportNotesFromCSV
+ * Class ImportTypesFromCSV
  *
  * @package App\Services\Importers
  */
-class ImportNotesFromCSV extends BaseImporter implements CSVImporter
+class ImportTypesFromCSV extends BaseImporter implements CSVImporter
 {
     /**
      * Returns the record count from the CSV
@@ -46,7 +46,7 @@ class ImportNotesFromCSV extends BaseImporter implements CSVImporter
                 continue;
             }
 
-            $success   = $this->persistRow(new Note(), $labels, $row);
+            $success   = $this->persistRow(new Type(), $labels, $row);
             $successes = $success ? $successes + 1 : $successes;
         }
 

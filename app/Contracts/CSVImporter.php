@@ -2,8 +2,6 @@
 
 namespace App\Contracts;
 
-use Generator;
-
 /**
  * Interface CSVImporter
  *
@@ -12,9 +10,9 @@ use Generator;
 interface CSVImporter extends Importer
 {
     /**
-     * Yields the row for use or verification
+     * Returns the record count inside of the CSV
      *
-     * @return Generator
+     * @return int
      */
-    public function yieldRow(): Generator;
+    public function recordCount(): int;
 }
