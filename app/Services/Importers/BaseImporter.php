@@ -58,7 +58,7 @@ abstract class BaseImporter implements Importer
      *
      * @return Generator
      */
-    protected function yieldRow(): Generator
+    protected function yieldRecord(): Generator
     {
         while (!feof($this->stream)) {
             yield fgetcsv($this->stream);
@@ -73,7 +73,7 @@ abstract class BaseImporter implements Importer
      * @param array $row
      * @return bool
      */
-    protected function persistRow(Model $model, array $labels, array $row): bool
+    protected function persistRecord(Model $model, array $labels, array $row): bool
     {
         $record = array_combine($labels, $row);
 

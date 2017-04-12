@@ -41,12 +41,12 @@ class ImportTypesFromCSV extends BaseImporter implements CSVImporter
         $successes = 0;
         $labels    = fgetcsv($this->stream);
 
-        foreach ($this->yieldRow() as $row) {
+        foreach ($this->yieldRecord() as $row) {
             if (!is_array($row)) {
                 continue;
             }
 
-            $success   = $this->persistRow(new Type(), $labels, $row);
+            $success   = $this->persistRecord(new Type(), $labels, $row);
             $successes = $success ? $successes + 1 : $successes;
         }
 

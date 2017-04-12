@@ -41,12 +41,12 @@ class ImportNotesFromCSV extends BaseImporter implements CSVImporter
         $successes = 0;
         $labels    = fgetcsv($this->stream);
 
-        foreach ($this->yieldRow() as $row) {
+        foreach ($this->yieldRecord() as $row) {
             if (!is_array($row)) {
                 continue;
             }
 
-            $success   = $this->persistRow(new Note(), $labels, $row);
+            $success   = $this->persistRecord(new Note(), $labels, $row);
             $successes = $success ? $successes + 1 : $successes;
         }
 
