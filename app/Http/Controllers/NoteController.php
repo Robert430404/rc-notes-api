@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\CSVImporter;
 use App\Note;
 use App\Services\Importers\ImportNotesFromCSV;
 use Carbon\Carbon;
@@ -30,11 +31,11 @@ class NoteController extends Controller
      *
      * @param Note $note
      */
-    public function __construct(Note $note, ImportNotesFromCSV $importNotesFromCSV)
+    public function __construct(Note $note, CSVImporter $CSVImporter)
     {
         $this->middleware('auth');
         $this->note     = $note;
-        $this->importer = $importNotesFromCSV;
+        $this->importer = $CSVImporter;
     }
 
     /**

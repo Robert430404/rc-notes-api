@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\CSVImporter;
 use App\Services\Importers\ImportTypesFromCSV;
 use App\Type;
 use Carbon\Carbon;
@@ -30,11 +31,11 @@ class TypeController extends Controller
      *
      * @param Type $type
      */
-    public function __construct(Type $type, ImportTypesFromCSV $importTypesFromCSV)
+    public function __construct(Type $type, CSVImporter $CSVImporter)
     {
         $this->middleware('auth');
         $this->type     = $type;
-        $this->importer = $importTypesFromCSV;
+        $this->importer = $CSVImporter;
     }
 
     /**
