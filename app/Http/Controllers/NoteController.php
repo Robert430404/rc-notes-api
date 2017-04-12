@@ -20,6 +20,9 @@ class NoteController extends Controller
      */
     private $note;
 
+    /**
+     * @var ImportNotesFromCSV
+     */
     private $importer;
 
     /**
