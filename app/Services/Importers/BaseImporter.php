@@ -27,7 +27,6 @@ abstract class BaseImporter implements Importer
     /**
      * Imports the uploaded file
      *
-     * @param UploadedFile $file
      * @return bool
      */
     abstract public function import(): bool;
