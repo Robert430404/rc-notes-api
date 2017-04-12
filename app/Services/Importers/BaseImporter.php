@@ -32,6 +32,13 @@ abstract class BaseImporter implements Importer
     abstract public function import(): bool;
 
     /**
+     * Returns the record count
+     *
+     * @return int
+     */
+    abstract public function recordCount(): int;
+
+    /**
      * Sets the source file for the importer, and opens the stream
      * for use by the class.
      *
