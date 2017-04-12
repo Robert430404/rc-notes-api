@@ -2,8 +2,6 @@
 
 namespace App\Contracts;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 /**
  * Interface Importer
  *
@@ -14,8 +12,7 @@ interface Importer
     /**
      * Imports the uploaded file
      *
-     * @param UploadedFile $file
      * @return bool
      */
-    public function import(UploadedFile $file): bool;
+    public function import(): bool;
 }

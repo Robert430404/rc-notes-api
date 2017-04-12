@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *
  * @package App\Services\Importers
  */
-class ImportFromCSV implements CSVImporter
+class Importer implements CSVImporter
 {
     /**
      * @var UploadedFile

@@ -41,28 +41,30 @@ class MakeAdmin extends Command
      */
     public function handle()
     {
-        $name   = $this->option('name');
-        $pass   = $this->option('pass');
-        $email  = $this->option('email');
+        $name     = $this->option('name');
+        $password = $this->option('pass');
+        $email    = $this->option('email');
 
         Validator::make([
             'name'  => $name,
-            'pass'  => $pass,
+            'password'  => $password,
             'email' => $email,
         ], [
             'name'  => 'required|max:255',
-            'pass'  => 'required|min:6',
+            'password'  => 'required|min:6',
             'email' => 'required|email|max:255',
         ])->validate();
 
-        User::create([
-            'name'       => $name,
-            'password'   => password_hash($pass, PASSWORD_DEFAULT),
-            'email'      => $email,
-            'api_key'    => password_hash($name . $pass, PASSWORD_DEFAULT ),
-            'created_at' => Carbon::now(),
-        ]);
+        $user             = new User();
+        $apiKey           = password_hash($name . $password, PASSWORD_DEFAULT );
+        $user->name       = $name;
+        $user->password   = $password;
+        $user->email      = $email;
+        $user->api_key    = $apiKey;
+        $user->created_at = Carbon::now();
 
+        $user->save();
+        $this->info("Your API Key Is: $apiKey");
         $this->info('User Created Successfully');
     }
 }
