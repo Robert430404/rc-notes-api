@@ -26,6 +26,7 @@ class NoteController extends Controller
      */
     public function __construct(Note $note)
     {
+        $this->middleware('auth');
         $this->note = $note;
     }
 

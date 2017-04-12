@@ -25,6 +25,7 @@ class TypeController extends Controller
      */
     public function __construct(Type $type)
     {
+        $this->middleware('auth');
         $this->type = $type;
     }
 
