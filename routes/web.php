@@ -16,15 +16,21 @@ $app->get('/', function () use ($app) {
 });
 
 $app->group(['prefix' => 'api/v1'], function () use ($app) {
-    $app->get(   'notes', 'NoteController@get');
-    $app->put(   'notes', 'NoteController@put');
-    $app->post(  'notes', 'NoteController@post');
-    $app->patch( 'notes', 'NoteController@patch');
-    $app->delete('notes', 'NoteController@delete');
+    $app->get(    'notes', 'NoteController@get');
+    $app->put(    'notes', 'NoteController@put');
+    $app->post(   'notes', 'NoteController@post');
+    $app->patch(  'notes', 'NoteController@patch');
+    $app->delete( 'notes', 'NoteController@delete');
+    $app->options('notes', function () {
+        return response('OK', 200);
+    });
 
-    $app->get(   'types', 'TypeController@get');
-    $app->put(   'types', 'TypeController@put');
-    $app->post(  'types', 'TypeController@post');
-    $app->patch( 'types', 'TypeController@patch');
-    $app->delete('types', 'TypeController@delete');
+    $app->get(    'types', 'TypeController@get');
+    $app->put(    'types', 'TypeController@put');
+    $app->post(   'types', 'TypeController@post');
+    $app->patch(  'types', 'TypeController@patch');
+    $app->delete( 'types', 'TypeController@delete');
+    $app->options('types', function () {
+        return response('OK', 200);
+    });
 });
